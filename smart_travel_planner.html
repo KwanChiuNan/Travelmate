@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart EU Travel Planner - Wireframe</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #f3f4f6;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    section {
+      margin-bottom: 2rem;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 1rem;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+    }
+    .output {
+      background: #e5f3ff;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Smart EU Travel Planner - Prototype</h1>
+
+  <section id="inputs">
+    <label>Your Name:</label>
+    <input type="text" id="name" placeholder="e.g. Alex" />
+
+    <label>Travel Dates:</label>
+    <input type="date" id="startDate" /> to <input type="date" id="endDate" />
+
+    <label>Destinations (choose from demo cities):</label>
+    <select id="destinations" multiple>
+      <option>Paris</option>
+      <option>Rome</option>
+      <option>Barcelona</option>
+      <option>Amsterdam</option>
+      <option>Berlin</option>
+    </select>
+
+    <label>Interests:</label>
+    <textarea id="interests" placeholder="e.g. history, art, nightlife"></textarea>
+
+    <button onclick="generateDemoPlan()">Generate Smart Plan</button>
+  </section>
+
+  <section class="output" id="planOutput">
+    <!-- Output will be dynamically generated here -->
+  </section>
+
+  <script>
+    function generateDemoPlan() {
+      const name = document.getElementById("name").value;
+      const startDate = document.getElementById("startDate").value;
+      const endDate = document.getElementById("endDate").value;
+      const destinations = Array.from(document.getElementById("destinations").selectedOptions).map(option => option.value);
+      const interests = document.getElementById("interests").value;
+
+      const demoSpots = {
+        "Paris": ["Eiffel Tower", "Louvre", "Seine Cruise"],
+        "Rome": ["Colosseum", "Vatican", "Trevi Fountain"],
+        "Barcelona": ["Sagrada Familia", "Park Güell"],
+        "Amsterdam": ["Canals", "Van Gogh Museum", "Anne Frank House"],
+        "Berlin": ["Brandenburg Gate", "Museum Island", "Berlin Wall"]
+      };
+
+      let planHtml = `<h2>🗺️ Smart Itinerary for ${name}</h2>`;
+      planHtml += `<p><strong>Dates:</strong> ${startDate} to ${endDate}</p>`;
+      planHtml += `<p><strong>Interests:</strong> ${interests}</p>`;
+      planHtml += `<ul>`;
+
+      destinations.forEach(city => {
+        const spots = demoSpots[city] || ["Explore top sights based on your interests"];
+        planHtml += `<li><strong>${city}:</strong> ${spots.join(", ")}</li>`;
+      });
+
+      planHtml += `</ul>`;
+      planHtml += `<p>👉 Plan includes maps, summaries, day-wise suggestions and more!</p>`;
+
+      document.getElementById("planOutput").innerHTML = planHtml;
+    }
+  </script>
+</body>
+</html>
